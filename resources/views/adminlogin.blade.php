@@ -18,6 +18,7 @@
         @endif
         <p>Login Page</p>
         <form action="{{ route('adminCheck') }}" method="POST">
+            @csrf
             <p>Email:</p>
             <input type="email" name="email" id="">
             <p>Password:</p>
