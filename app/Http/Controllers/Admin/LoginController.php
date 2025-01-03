@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         $admin = Admin::where('email', $validated['email'])->first();
 
-        if(!$admin || Hash::check($validated['password'], $admin->password)) {
+        if(!$admin || !Hash::check($validated['password'], $admin->password)) {
             return back()->withErrors(["email" => 'Invalid Email or Password']);
         }
 
