@@ -10,7 +10,7 @@ class User extends Authenticatable
 
     use HasFactory;
 
-    protected $guarded = [] ;
+    protected $guarded = [];
 
     public function orders() {
         return $this->hasMany(Order::class);
