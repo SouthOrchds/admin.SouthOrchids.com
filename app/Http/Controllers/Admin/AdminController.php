@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,9 @@ class AdminController extends Controller
 {
     public function index() 
     {
+        if(!Auth::guard('admin')->check()) {
+            return redirect()->route('login');
+        }
         return view('adminregister');
     }
 
