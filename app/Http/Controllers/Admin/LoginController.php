@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
     public function index() 
     {
+        if(Auth::guard('admin')->check()) {
+            return redirect()->route('dashboard');
+        }
         return view('adminlogin');
     }
 
@@ -21,12 +25,15 @@ class LoginController extends Controller
             'password' => 'required|min:8',
         ]);
 
-        $admin = Admin::where('email', $validated['email'])->first();
-
-        if(!$admin || !Hash::check($validated['password'], $admin->password)) {
-            return back()->withErrors(["email" => 'Invalid Email or Password']);
+        if(Auth::guard('admin')->attempt(['email' => $validated['email'], 'password' => $validated['password']])) {
+            return redirect()->route('dashboard');
         }
+        
+        return back()->withErrors(["email" => 'Invalid Email or Password']);
+    }
 
-        return redirect()->route('dashboard');
+    public function loggedOut()
+    {
+        
     }
 }
