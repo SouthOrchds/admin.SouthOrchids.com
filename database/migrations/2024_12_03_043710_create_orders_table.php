@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedInteger('user_id');
-            $table->json('orders');
             $table->dateTime('order_date');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('tranaction_id')->nullable();
+            $table->json('total_count');
             $table->unsignedInteger('total_amount');
-            $table->string('status');
+            $table->string('payment_status');
+            $table->string('delivery_status')->nullable();
         });
     }
 
