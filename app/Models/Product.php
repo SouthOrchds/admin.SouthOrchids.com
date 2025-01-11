@@ -13,8 +13,8 @@ class Product extends Model
         return $this->belongsTo(Category::class, "category_id");
     }
 
-    public function orders() {
-        return $this->belongsToMany(Order::class, "orders");
+    public function ordersItems() {
+        return $this->belongsToMany(Order_Item::class, 'product_id');
     }
 
     public function orderHistories() {
