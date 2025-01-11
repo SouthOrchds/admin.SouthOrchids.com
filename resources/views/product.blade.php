@@ -22,26 +22,28 @@
 <body>
     <div class="p-5">
         <div class="py-5">
-            <h1 class="text-3xl font-medium">Products (Total: <span id="totalCount"></span>)</h1>
+            <h1 class="text-3xl font-medium">Products (Total: <span id="totalCount">{{ $products->count() }}</span>)</h1>
         </div>
         
         <div class="flex justify-between p-5 ">
             <form action="{{ route('products.search') }}" >
                 <div class="flex gap-x-10">
                     <div>
-                        <input type="" name="" id="searchInput" placeholder="Search" class="p-1 border border-black w-96">
+                        <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96">
                         <p class="px-1 text-sm text-gray-600">Enter the Product Name</p>
                     </div>
                     <div>
-                        <select name="" id="" class="p-1 border border-black min-w-32">
-                            <option value="">--Select Brand--</option>
-                            <option value=""></option>
+                        <select name="brand" id="brandFilter" class="p-1 border border-black min-w-32">
+                            <option value="">--All--</option>
+                            @foreach ($brands as $brand)
+                            <option value="{{ $brand->brand }}">{{ $brand->brand }}</option>
+                            @endforeach
                         </select>
                         <p class="px-1 text-sm text-gray-600">Brand</p>
                     </div>
                     <div>
-                        <select name="" id="" class="p-1 border border-black min-w-32">
-                            <option value="">--Select Status--</option>
+                        <select name="status" id="statusFilter" class="p-1 border border-black min-w-32">
+                            <option value="">--All--</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">In-Active</option>
                         </select>
@@ -64,6 +66,7 @@
                     <th>Brand</th>
                     <th>Price</th>
                     <th>Mrp_price</th>
+                    <th>Purchased_price</th>
                     <th>Category_id</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -78,6 +81,7 @@
                         <td>{{ $product->brand }}</td>
                         <td><span>&#8377;</span> {{ $product->price }}</td>
                         <td><span>&#8377;</span> {{ $product->mrp_price }}</td>
+                        <td><span>&#8377;</span> {{ $product->purchased_price }}</td>
                         <td>{{ $product->category_id }}</td>
                         <td>{{ $product->status }}</td>
                         <td>
@@ -126,6 +130,10 @@
                         <div class="flex items-center justify-between py-2">
                             <p class="py-1 ">MRP Price:</p>
                             <input type="number" name="mrp_price" id="" class="w-56 p-1 border border-black">
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <p class="py-1 ">purchase Price:</p>
+                            <input type="number" name="purchase_price" id="" class="w-56 p-1 border border-black">
                         </div>
                         <div class="flex items-center justify-between py-2">
                             <p class="py-1 ">Category:</p>
@@ -180,54 +188,77 @@
             document.getElementById('addProdectModel').classList.add('hidden');
         });
     }
-
-    const searchInput = document.getElementById('searchInput');
-    const tableBody = document.getElementById('tableBody');
-
-    searchInput.addEventListener('input', function() {
+    
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        let statusFilter = '';
+        let brandFilter = '';
         
-        const query = searchInput.value;
-        const ProductCount = document.getElementById('totalCount');
-
-        fetch(`/products/search?search=${query}`)
+        const searchInput = document.getElementById('searchInput');
+        const selectStatus = document.getElementById('statusFilter');
+        const selectBrand = document.getElementById('brandFilter');
+        const tableBody = document.getElementById('tableBody');
+        
+        function fetchRender() {
+            const search = searchInput.value;
+            const status = statusFilter;
+            const brand = brandFilter;
+            console.log(brand);
+            
+            fetch(`/admin/product-search?search=${search}&brand=${brand}&status=${status}`)
             .then(response => response.json())
             .then(products => {
                 tableBody.innerHTML = '';
-                ProductCount.innerHTML = products.length;
                 if (products.length > 0) {
                     products.forEach(product => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>#${product.id}</td>
-                            <td>${product.name}</td>
-                            <td>${product.quantity}</td>
-                            <td>${product.brand}</td>
-                            <td>&#8377; ${product.price}</td>
-                            <td>&#8377; ${product.mrp_price}</td>
-                            <td>${product.category_id}</td>
-                            <td>${product.status}</td>
+                            <td>#${ product.id }</td>
+                            <td>${ product.name }</td>
+                            <td>${ product.quantity }</td>
+                            <td>${ product.brand }</td>
+                            <td>&#8377; ${ product.price }</td>
+                            <td>&#8377; ${ product.mrp_price }</td>
+                            <td>&#8377; ${ product.purchased_price }</td>
+                            <td>${ product.category_id }</td>
+                            <td>${ product.status }</td>
                             <td>
                                 <button class="px-2 text-white bg-blue-400 border rounded">
                                     <i class="text-xl icon ion-md-image"></i>
-                                </button>
-                                <button class="px-2 bg-yellow-400 border rounded">
+                                    </button>
+                                    <button class="px-2 bg-yellow-400 border rounded">
                                     <i class="text-xl icon ion-md-create"></i>
                                 </button>
                                 <button class="px-2 bg-red-500 border rounded">
-                                    <i class="text-xl icon ion-ios-trash"></i>
+                                <i class="text-xl icon ion-ios-trash"></i>
                                 </button>
                             </td>
                         `;
                         tableBody.appendChild(row);
                     });
                 } else {
-                    tableBody.innerHTML = `<tr><td colspan="9" class="text-center">No products found.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="10" class="text-center">No products found.</td></tr>`;
                 }
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
+        }
+        
+        searchInput.addEventListener('input', fetchRender);
+        
+        selectStatus.addEventListener('change', function(event) {
+            statusFilter = event.target.value;
+            fetchRender();
+        });
+        
+        selectBrand.addEventListener('change', function(event) {
+            brandFilter = event.target.value;
+            fetchRender();
+        })
     });
+
 
 </script>
 </html>
