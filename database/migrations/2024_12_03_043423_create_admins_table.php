@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->unsignedBigInteger('Phone_no')->unique();
-            $table->string('apiToken');
+            $table->string('api_token');
             $table->string('password');
         });
     }
