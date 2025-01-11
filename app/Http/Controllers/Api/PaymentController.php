@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Order_Item;
+use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,26 +23,34 @@ class PaymentController extends Controller
 
             $amount = $request->amount;
 
-            $order = $api->order->create([
+            $razorpayOrder = $api->order->create([
                 'amount' => $amount,
                 'currency' => 'INR',
                 'receipt' => 'order_rcpt_' . uniqid(),
             ]);
+
+            $items = $request->items;
+            $productCount = count($items);
+            $quantityCount = array_sum(array_column($items, 'quantity'));
             
-            $newOrder = Order::create([
+            $order = Order::create([
                 'user_id' => Auth::id(),
-                'orders' => json_encode($request->items),
                 'order_date' => now(),
                 'total_amount' => $amount / 100,
-                'status' => 'Pending',
+                'payment_status' => 'Pending',
+                'delivery_status' => 'Pending',
+                'total_count' => json_encode([
+                    'product_count' => $productCount,
+                    'quantity_count' => $quantityCount,
+                ]),
             ]);
             
             return response()->json([
-                'order_id' => $newOrder->id,
-                'razorpay_order_id' => $order['id'],
+                'order_id' => $order->id,
+                'razorpay_order_id' => $razorpayOrder['id'],
                 'amount' => $amount,
                 'currency' => 'INR',
-                'order' => $newOrder->orders,
+                'order_items' => $items,
             ]);
 
         } catch (\Exception $e) {
@@ -61,19 +71,35 @@ class PaymentController extends Controller
 
             $api = new Api($apiKey, $apiSecret);
 
-            $attributes = [
+            $api->utility->verifyPaymentSignature([
                 'razorpay_signature' => $signature,
                 'razorpay_payment_id' => $razorpayPaymentId,
                 'razorpay_order_id' => $razorpayOrderId,
-            ];
-
-            $api->utility->verifyPaymentSignature($attributes);
+            ]);
 
             $order = Order::where('id', $request->order_id)->first();
-            $order->status = 'Completed';
-            $order->save();
+            $order->payment_status = 'Completed';
+            $order->delivery_status = 'Order Placed';
 
-            Transaction::create([
+            $items = $request->items;
+            foreach($items as $item) {
+                $product = Product::find($item['product_id']);
+
+                if (!$product) {
+                    return response()->json(['error' => "Product with ID {$item['product_id']} not found."], 404);
+                }
+
+                $order_items = Order_Item::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'quantity' => $item['quantity'],
+                    'price' => $product->price,
+                    'mrp_price' => $product->mrp_price,
+                    'purchased_price' => $product->purchased_price,
+                ]);
+            }
+
+            $transaction = Transaction::create([
                 'user_id' => Auth::id(),
                 'order_id' => $order->id,
                 'phone_number' => $request->phone_no,
@@ -81,6 +107,9 @@ class PaymentController extends Controller
                 'amount' => $order->total_amount,
                 'status' => 'Success',
             ]);
+
+            $order->tranaction_id = $transaction->id;
+            $order->save();
 
             app(CartController::class)->ClearCartAfterOrder($request);
 
