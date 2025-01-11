@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('category_id');
             $table->integer('mrp_price');
             $table->integer('price');
+            $table->integer('purchased_price')->nullable();
             $table->string('status');
             $table->string('product_image');
         });
