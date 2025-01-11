@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Order_Item;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,13 @@ class OrderHistoryController extends Controller
     {
         $user = $request->user();
 
-        $orderItems = Order::where('user_id', $user->id)->get();
+        $orders = Order::where('user_id', $user->id)->get();
 
-        $orderHistory = $orderItems->map(function ($order) {
+        $orderHistory = $orders->map(function ($order) {
             
-            $orderDetails = json_decode($order->orders, true);
+            $orderItems = Order_Item::where('order_id', $order->id)->get();
 
-            $products = collect($orderDetails)->map(function ($item) {
+            $products = $orderItems->map(function ($item) {
                 $product = Product::find($item['product_id']);
                 return [
                     'product_name' => $product->name,
@@ -34,7 +35,8 @@ class OrderHistoryController extends Controller
                 'id' => $order->id,
                 'order_date' => $order->order_date,
                 'total_amount' => $order->total_amount,
-                'status' => $order->status,
+                'payment_status' => $order->payment_status,
+                'delivery_status' => $order->delivery_status,
                 'items' => $products,
             ];
         });
