@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserDataController;
 use App\Http\Controllers\Admin\UserOrderController;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/order-items', [UserOrderController::class, 'getOrderItems'])->name('user.orderItems');
         Route::post('/order/{id}/ship', [UserOrderController::class, 'shipOrder']);
+
+        Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
+        Route::get('/transaction-search', [TransactionController::class, 'show'])->name('transaction.search');
     });
 });
