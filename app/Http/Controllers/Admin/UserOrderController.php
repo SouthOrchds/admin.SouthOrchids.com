@@ -10,9 +10,41 @@ use Illuminate\Http\Request;
 
 class UserOrderController extends Controller
 {
+    public function getOrderDetails()
+    {
+        $userorders = Order::with(['user', 'orderitems.product'])->get();
+
+        return view('pages/userOrder', compact('userorders'));
+    }
+
+    public function searchOrderDetails(Request $request)
+    {
+        $query = Order::with(['user', 'orderitems.product']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('phone_no', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $status = $request->status;
+            $query->where('delivery_status', $status);
+        }
+
+        
+        $orders = $query->get();
+
+        return response()->json($orders);
+    }
+
     public function getOrderItems()
     {
         $orders = Order::with(['user', 'orderitems.product'])->get();
+        $placedOrderCount = Order::where('delivery_status', 'Order Placed')->count();
 
         $orderDetail = $orders->map(function ($order) {
 
@@ -45,7 +77,7 @@ class UserOrderController extends Controller
             ];
 
         });
-        return view('userOrdersItems', compact('orderDetail'));
+        return view('pages/userOrdersItems', compact('orderDetail', 'placedOrderCount'));
     }
 
     public function shipOrder(Request $request, $orderId)
@@ -64,6 +96,6 @@ class UserOrderController extends Controller
 
     public function getOrders()
     {
-        return view('userOrder');
+        return view('pages/userOrder');
     }
 }
