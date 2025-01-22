@@ -17,7 +17,6 @@ class UserController
     public function register(Request $request)
     {
         try {
-            Log::info('Request Data: ', $request->all());
             
             $validatedData = $request->validate([
                 'name' => 'required|string|max:50|regex:/^[a-zA-Z\s]+$/',
