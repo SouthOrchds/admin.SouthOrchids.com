@@ -22,18 +22,24 @@ Route::prefix('admin')->group(function () {
     
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, "index"])->name('dashboard');
-        Route::get('/product', [ProductController::class, "index"])->name("product");
-        Route::post('/product', [ProductController::class, "addProduct"])->name("addproduct");
-        Route::get('/product-search', [ProductController::class, 'getProducts'])->name('products.search');
+        
         Route::get('/user-data', [UserDataController::class, 'index'])->name('usersdata');
         Route::get('/user-search', [UserDataController::class, 'getUserData'])->name('user.search');
+        Route::post('/user-register', [UserDataController::class, 'createUser'])->name('user.register');
+        
+        Route::get('/product', [ProductController::class, "index"])->name("products");
+        Route::post('/product', [ProductController::class, "addProduct"])->name("addproduct");
+        Route::get('/product-search', [ProductController::class, 'getProducts'])->name('products.search');
 
-        Route::get('/orders', [UserOrderController::class, 'getOrders'])->name('user.orders');
-
+        Route::get('/order-details', [UserOrderController::class, 'getOrderDetails'])->name('user.ordersDetails');
+        Route::get('/order-search', [UserOrderController::class, 'searchOrderDetails'])->name('user.ordersDetails.search');
+        
         Route::get('/order-items', [UserOrderController::class, 'getOrderItems'])->name('user.orderItems');
         Route::post('/order/{id}/ship', [UserOrderController::class, 'shipOrder']);
 
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
         Route::get('/transaction-search', [TransactionController::class, 'show'])->name('transaction.search');
+
+        Route::get('/logout', [LoginController::class, "loggedOut"])->name('logout');
     });
 });
