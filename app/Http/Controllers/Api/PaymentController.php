@@ -108,7 +108,7 @@ class PaymentController extends Controller
                 'status' => 'Success',
             ]);
 
-            $order->tranaction_id = $transaction->id;
+            $order->transaction_id = $transaction->id;
             $order->save();
 
             app(CartController::class)->ClearCartAfterOrder($request);
