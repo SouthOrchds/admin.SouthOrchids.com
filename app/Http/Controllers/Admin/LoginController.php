@@ -15,7 +15,7 @@ class LoginController extends Controller
         if(Auth::guard('admin')->check()) {
             return redirect()->route('dashboard');
         }
-        return view('adminlogin');
+        return view('pages/adminlogin');
     }
 
     public function checkLogin(Request $request)
@@ -34,6 +34,7 @@ class LoginController extends Controller
 
     public function loggedOut()
     {
-        
+        Auth::guard('admin')->logout();
+        return redirect()->route('login');        
     }
 }

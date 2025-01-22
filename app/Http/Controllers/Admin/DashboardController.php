@@ -13,6 +13,6 @@ class DashboardController extends Controller
         if(!Auth::guard('admin')->check()) {
             return redirect()->route('login');
         }
-        return view('dashboard');
+        return view('pages/dashboard');
     }
 }

@@ -19,7 +19,7 @@ class AdminController extends Controller
         if(!Auth::guard('admin')->check()) {
             return redirect()->route('login');
         }
-        return view('adminregister');
+        return view('pages/adminregister');
     }
 
     public function registerAdmin(Request $request)

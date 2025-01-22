@@ -17,7 +17,7 @@ class ProductController extends Controller
         $products = Product::all();
         $brands = Product::select('brand')->distinct()->get();
 
-        return view('product', compact('products', 'brands'));
+        return view('pages/product', compact('products', 'brands'));
     }
 
     public function addProduct(Request $request)
