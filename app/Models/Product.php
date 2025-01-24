@@ -9,6 +9,17 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $appends = ['image_url'];
+    
+    public function getImageUrlAttribute()
+    {
+        return $this->product_image 
+            ? asset($this->product_image) 
+            : null;
+    }
+
     public function category() {
         return $this->belongsTo(Category::class, "category_id");
     }
