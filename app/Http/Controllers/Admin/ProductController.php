@@ -37,7 +37,9 @@ class ProductController extends Controller
 
         if($request->hasFile('product_image')) {
             $image = $request->file('product_image');
-            $image_path = $image->store('product_image', 'public');
+            $image_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $image_name);
+            $image_path = 'images/' . $image_name;
         }
 
         $product = new Product();
