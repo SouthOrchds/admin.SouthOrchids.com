@@ -12,6 +12,7 @@ Route::post("/signup", [UserController::class, "register"]);
 Route::post("/login", [LoginController::class,"loginCheck"]);
 Route::get("/products", [ProductController::class, "sendmsg"]);
 Route::get("/user-info", [UserController::class, "UserData"])->middleware('auth');
+Route::post("/edit-address", [UserController::class, "editAddress"])->middleware('auth');
 Route::middleware('auth')->group(function () {
     Route::post("/cart/add", [CartController::class, "AddCartItem"]);
     Route::get("/cart", [CartController::class, "ShowCartItems"]);
