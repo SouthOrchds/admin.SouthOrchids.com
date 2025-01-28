@@ -3,6 +3,7 @@
 @section('title', 'Dashboard Page')
 
 @section('content')
-    <h1>Welcome to the Dashboard</h1>
-    <p>This is the dashboard content.</p>
+<div class="p-5 max-sm:p-2">
+    <p class="text-3xl font-medium max-sm:text-2xl">Dashboard Page</p>
+</div>
 @endsection
