@@ -17,17 +17,17 @@
     }
 </style>
 
-<div class="p-5">
-    <div class="py-5">
-        <p class="text-3xl font-medium">Transaction Page</p>
+<div class="p-5 max-sm:p-2">
+    <div class="py-5 max-sm:py-3">
+        <p class="text-3xl font-medium max-sm:text-2xl">Transaction Page</p>
     </div>
-    <div class="p-5">
+    <div class="py-5 max-sm:py-2">
         <form action="{{ route('transaction.search') }}">
-            <input type="number" name="phone_no" id="name" placeholder="Search number" class="p-1 border border-black w-96">
-            <p class="p-1 text-sm text-gray-600">Search by phone name</p>
+            <input type="number" name="phone_no" id="name" placeholder="Search number" class="p-1 border border-black w-96 max-sm:w-full">
+            <p class="p-1 text-sm text-gray-600 max-sm:text-sm">Search by phone name</p>
         </form>
     </div>
-    <div class="py-5">
+    <div class="py-5 max-sm:text-sm max-sm:overflow-x-scroll">
         <table>
             <thead>
                 <th>Id</th>
