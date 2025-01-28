@@ -57,5 +57,27 @@ class UserController
 
         return response()->json($userdata);
     }
+
+    public function editAddress(Request $request)
+    {
+        $user = Auth::user();
+
+        if(!$user) {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }     
+        
+        $validatedData = $request->validate([
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'pincode' => 'required|digits:6|regex:/^[6]\d{5}$/',
+        ]);
+        
+        $user->address = $validatedData['address'];
+        $user->city = $validatedData['city'];
+        $user->pincode = $validatedData['pincode'];
+        $user->save();  
+
+        return response()->json(['message' => 'Address updated successfully'], 200);
+    }
 }
 

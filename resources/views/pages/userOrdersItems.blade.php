@@ -16,10 +16,10 @@
     }
 </style>
 
-<div class="p-5">
-    <p class="text-3xl font-medium">Customer Orders <span id="totalCount" class="text-2xl">( Total: {{ $placedOrderCount }} )</span></p>
-    <div class="py-10">
-        <table class="text-lg">
+<div class="p-5 max-sm:p-2">
+    <p class="text-3xl font-medium max-sm:text-2xl">Customer Orders <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $placedOrderCount }} )</span></p>
+    <div class="py-10 max-sm:pt-10 max-sm:pb-2 max-sm:overflow-x-scroll">
+        <table class="text-lg max-sm:text-sm">
             <thead>
                 <th>Id</th>
                 <th>Ordered Date</th>
@@ -51,10 +51,10 @@
                         <td>{{ $product->product_brand }}</td>
                         @if($index === 0)
                         <td rowspan="{{ $productCount }}" class="">
-                            <button class="px-2 py-0.5 bg-blue-400 shadow rounded-sm text-lg mr-2" onclick="deliveryUpdate({{ $order->order_id }})">
+                            <button class="px-2 py-0.5 bg-blue-400 shadow rounded-sm text-lg mr-2 max-sm:mr-0 max-sm:my-1 max-sm:text-sm" onclick="deliveryUpdate({{ $order->order_id }})">
                                 <i class="fa-solid fa-truck-fast"></i>
                             </button>
-                            <button class="px-2.5 py-0.5 bg-red-500 shadow rounded-sm text-lg">
+                            <button class="px-2.5 py-0.5 bg-red-500 shadow rounded-sm text-lg max-sm:text-md">
                                 <i class="icon ion-md-close"></i>
                             </button>
                         </td>

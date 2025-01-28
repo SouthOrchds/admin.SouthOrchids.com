@@ -17,29 +17,29 @@
     }
 </style>
 
-<div class="p-5">
-  <div class="py-5">
-    <p class="text-3xl font-medium">Order Details <span id="totalCount" class="text-2xl">( Total: {{ $userorders->count() }} )</span></p>
+<div class="p-5 max-sm:p-2">
+  <div class="py-5 max-sm:py-2">
+    <p class="text-3xl font-medium max-sm:text-2xl">Order Details <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $userorders->count() }} )</span></p>
   </div>
-  <div class="p-5">
-    <form action="{{ route('user.ordersDetails.search') }}" method="GET" class="flex gap-20 items-center">
-      <div>
-        <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96">
-        <p class="px-1 text-sm text-gray-600">Enter name or phone number</p>
+  <div class="py-5 max-sm:py-5">
+    <form action="{{ route('user.ordersDetails.search') }}" method="GET" class="flex gap-20 items-center max-sm:block">
+      <div class="max-sm:mb-3">
+        <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96 max-sm:w-full">
+        <p class="px-1 text-sm text-gray-600 max-sm:text-xs">Enter name or phone number</p>
       </div>
-      <div>
+      <div class="max-sm:mb-3">
         <select name="" id="selectStatus" class="p-1 border border-black min-w-32">
           <option value="">--All--</option>
           <option value="Order Placed">Placed Orders</option>
           <option value="Shipped">Shipped Orders</option>
           <option value="Delivered">Delivered Orders</option>
         </select>
-        <p class="px-1 text-sm text-gray-600">Select Status</p>
+        <p class="px-1 text-sm text-gray-600 max-sm:text-xs">Select Status</p>
       </div>
     </form>
   </div>
 
-    <div class="py-5">
+    <div class="py-5 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
       <table>
         <thead>
           <th>Id</th>
@@ -71,8 +71,8 @@
               <td>{{ $order->payment_status }}</td>
               <td>{{ $order->delivery_status }}</td>
               <td>
-                <button class="px-2 bg-yellow-400 border rounded"><i class="text-xl icon ion-md-create"></i></button>
-                <button class="px-2 bg-red-500 border rounded"><i class="text-xl icon ion-ios-trash"></i></button>
+                <button class="px-2 bg-yellow-400 border rounded max-sm:px-1.5 max-sm:my-1"><i class="text-xl icon ion-md-create max-sm:text-sm"></i></button>
+                <button class="px-2 bg-red-500 border rounded max-sm:px-1.5 max-sm:my-1"><i class="text-xl icon ion-ios-trash max-sm:text-sm"></i></button>
               </td>
             </tr>
             @endforeach
