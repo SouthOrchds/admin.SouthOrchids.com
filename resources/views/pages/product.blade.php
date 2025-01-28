@@ -16,34 +16,36 @@
         }
 </style>
 
-<div class="p-5">
-    <div class="py-5">
-        <h1 class="text-3xl font-medium">Products  <span id="totalCount" class="text-2xl">( Total: {{ $products->count() }} )</span></h1>
+<div class="p-5 max-sm:p-2">
+    <div class="py-5 max-sm:py-2">
+        <h1 class="text-3xl font-medium max-sm:text-2xl">Products  <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $products->count() }} )</span></h1>
     </div>
     
-    <div class="flex justify-between p-5 ">
+    <div class="flex justify-between py-5 max-sm:py-2 max-sm:flex-col max-sm:gap-4">
         <form action="{{ route('products.search') }}" >
-            <div class="flex gap-x-10">
+            <div class="flex gap-x-10 max-sm:flex-col max-sm:gap-2">
                 <div>
-                    <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96">
+                    <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black  w-[720px] max-sm:w-full">
                     <p class="px-1 text-sm text-gray-600">Enter the Product Name</p>
                 </div>
-                <div>
-                    <select name="brand" id="brandFilter" class="p-1 border border-black min-w-32">
-                        <option value="">--All--</option>
-                        @foreach ($brands as $brand)
-                        <option value="{{ $brand->brand }}">{{ $brand->brand }}</option>
-                        @endforeach
-                    </select>
-                    <p class="px-1 text-sm text-gray-600">Brand</p>
-                </div>
-                <div>
-                    <select name="status" id="statusFilter" class="p-1 border border-black min-w-32">
-                        <option value="">--All--</option>
-                        <option value="Active">Active</option>
-                        <option value="Inactive">In-Active</option>
-                    </select>
-                    <p class="px-1 text-sm text-gray-600">Status</p>
+                <div class="flex gap-7 max-sm:flex max-sm:py-2 max-sm:flex-row max-sm:gap-5">
+                    <div>
+                        <select name="brand" id="brandFilter" class="p-1 border border-black  min-w-32">
+                            <option value="">--All--</option>
+                            @foreach ($brands as $brand)
+                            <option value="{{ $brand->brand }}">{{ $brand->brand }}</option>
+                            @endforeach
+                        </select>
+                        <p class="px-1 text-sm text-gray-600">Brand</p>
+                    </div>
+                    <div>
+                        <select name="status" id="statusFilter" class="p-1 border border-black  min-w-32">
+                            <option value="">--All--</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">In-Active</option>
+                        </select>
+                        <p class="px-1 text-sm text-gray-600">Status</p>
+                    </div>
                 </div>
             </div>
         </form>
@@ -53,7 +55,7 @@
         </div>
     </div>
 
-    <div class="py-5">
+    <div class="py-5 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
         <table>
             <thead>
                 <th>Id</th>
@@ -81,9 +83,9 @@
                     <td>{{ $product->category_id }}</td>
                     <td>{{ $product->status }}</td>
                     <td>
-                        <button class="px-2 text-white bg-blue-400 border rounded"><i class="text-xl icon ion-md-image"></i></button>
-                        <button class="px-2 bg-yellow-400 border rounded"><i class="text-xl icon ion-md-create"></i></button>
-                        <button class="px-2 bg-red-500 border rounded"><i class="text-xl icon ion-ios-trash"></i></button>
+                        <button class="px-2 text-white bg-blue-400 border rounded max-sm:px-1.5 max-sm:my-1"><i class="text-xl icon ion-md-image max-sm:text-sm"></i></button>
+                        <button class="px-2 bg-yellow-400 border rounded max-sm:px-1.5 max-sm:my-1"><i class="text-xl icon ion-md-create max-sm:text-sm"></i></button>
+                        <button class="px-2 bg-red-500 border rounded max-sm:px-1.5 max-sm:my-1"><i class="text-xl icon ion-ios-trash max-sm:text-sm"></i></button>
                     </td>
                 </tr>
                 @endforeach
@@ -96,52 +98,52 @@
         </table>
     </div>
 </div>
-<div id="addProdectModel" class="fixed inset-0 z-50 flex items-center justify-center hidden pt-5 overflow-y-scroll bg-black bg-opacity-50">
-    <div class="bg-white ">
+<div id="addProdectModel" class="fixed inset-0 z-50 flex items-center justify-center hidden pt-5 overflow-y-scroll bg-black bg-opacity-50 max-sm:pt-2 max-sm:h-screen">
+    <div class="bg-white max-sm:p-2 max-sm:mx-2">
         <div class="border mt-20">
-            <p class="pt-10 text-xl font-medium text-center">Add New Product</p>
-            <div class="flex justify-start p-5">
+            <p class="pt-10 text-xl font-medium text-center max-sm:text-lg max-sm:pb-3">Add New Product</p>
+            <div class="flex justify-start p-5 max-sm:px-5">
                 <form action="{{ route('addproduct') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Name :</p>
-                        <input type="text" name="product_name" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2 max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Name :</p>
+                        <input type="text" name="product_name" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Description :</p>
-                        <textarea rows="4" name="product_decrp" id="" class="w-56 p-1 border border-black"></textarea>
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Description :</p>
+                        <textarea rows="4" name="product_decrp" id="" class="w-56 p-1 border border-black "></textarea>
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Quantity :</p>
-                        <input type="text" name="product_quantity" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Quantity :</p>
+                        <input type="text" name="product_quantity" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Brand Name:</p>
-                        <input type="text" name="brand_name" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Brand Name:</p>
+                        <input type="text" name="brand_name" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Our Price:</p>
-                        <input type="number" name="price" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Our Price:</p>
+                        <input type="number" name="price" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">MRP Price:</p>
-                        <input type="number" name="mrp_price" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">MRP Price:</p>
+                        <input type="number" name="mrp_price" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">purchase Price:</p>
-                        <input type="number" name="purchase_price" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">purchase Price:</p>
+                        <input type="number" name="purchase_price" id="" class="w-56 p-1 border border-black ">
                     </div>
-                    <div class="flex items-center justify-between py-2">
-                        <p class="py-1 ">Category:</p>
-                        <select name="category" id="" class="w-56 p-1 border border-black">
+                    <div class="flex items-center justify-between py-2  max-sm:w-full">
+                        <p class="py-1  max-sm:text-sm">Category:</p>
+                        <select name="category" id="" class="w-56 p-1 border border-black ">
                             <option value="">--Select--</option>
                             <option value="1">Milk</option>
                             <option value="2">Honey</option>
                             <option value="3">Crafts</option>
                         </select>
                     </div>
-                    <div class="flex items-center py-3 gap-x-36">
-                        <p>Status:</p>
+                    <div class="flex items-center py-3 gap-x-36  max-sm:w-full">
+                        <p class=" max-sm:text-sm">Status:</p>
                         <div class="flex justify-between gap-10">
                             <div class="flex items-center gap-x-2">
                                 <input type="radio" name="product_status" id="active" value="Active">
@@ -153,11 +155,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-5 py-2">
-                        <p class="py-2 ">Product Image:</p>
+                    <div class="flex items-center justify-between gap-5 py-2  max-sm:w-full">
+                        <p class="py-2  max-sm:text-sm">Product Image:</p>
                         <input type="file" name="product_image" id="">
                     </div>
-                    <div class="flex justify-center gap-5 pt-3">
+                    <div class="flex justify-center gap-5 pt-3  max-sm:w-full">
                         <button class="px-4 py-0.5 border rounded bg-blue-500 text-white" type="submit">Submit</button>
                         <button class="px-4 py-0.5 border rounded bg-black text-white" id="CancelButton">Cancel</button>
                     </div>
