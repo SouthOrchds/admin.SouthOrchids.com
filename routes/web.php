@@ -9,9 +9,9 @@ use App\Http\Controllers\Admin\UserDataController;
 use App\Http\Controllers\Admin\UserOrderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AdminController::class, "index"]);
 
 Route::prefix('admin')->group(function () {
+    Route::get('/sign', [AdminController::class, "index"]);
     Route::post('/sign', [AdminController::class, "registerAdmin"])->name('adminRegister');
     Route::get('/login', [LoginController::class, "index"])->name('login');
     Route::post('/login', [LoginController::class, "checkLogin"])->name('adminCheck');
