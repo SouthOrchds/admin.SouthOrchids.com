@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
 
-    'allowed_origins' => ['hhttps://main.d21bc80gabx2fc.amplifyapp.com'],
+    'allowed_origins' => ['https://main.d21bc80gabx2fc.amplifyapp.com'],
 
     'allowed_origins_patterns' => [],
 
