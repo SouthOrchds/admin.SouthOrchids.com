@@ -19,8 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
-    // 'allowed_origins' => ['https://main.d21bc80gabx2fc.amplifyapp.com', 'http://localhost:5173'],
+    // 'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://main.d21bc80gabx2fc.amplifyapp.com'],
 
     'allowed_origins_patterns' => [],
 
