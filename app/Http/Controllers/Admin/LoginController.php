@@ -13,7 +13,11 @@ class LoginController extends Controller
     public function index() 
     {
         if(Auth::guard('admin')->check()) {
-            return redirect()->route('dashboard');
+            $admin = Auth::guard('admin')->user();
+
+            if($admin->status == 'active'){
+                return redirect()->route('dashboard');
+            }
         }
         return view('pages/adminlogin');
     }
