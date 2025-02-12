@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('email')->unique();
-            $table->unsignedBigInteger('Phone_no')->unique();
+            $table->unsignedBigInteger('phone_no')->unique();
+            $table->string('status')->default('active');
             $table->string('api_token');
             $table->string('password');
         });
