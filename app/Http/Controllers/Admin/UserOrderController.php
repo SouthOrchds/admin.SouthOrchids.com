@@ -94,8 +94,74 @@ class UserOrderController extends Controller
         return  response()->json(['success' => false]);
     }
 
-    public function getOrders()
+    public function getShippedOrders()
     {
-        return view('pages/userOrder');
+        $orders = Order::with(['user', 'orderitems.product'])
+                        ->where('delivery_status', 'Shipped')
+                        ->get();
+        
+        $shippedOrderCount = $orders->count();
+
+        $shippedDetails = $orders->map(function ($order) {
+            $products = $order->orderItems->map(function ($item) {
+                $product = $item->product;
+                return(object) [
+                    'product_id' => $product->id,
+                    'quantity' => $item->quantity,
+                    'product_name' => $product->name,
+                    'product_quantity' => $product->quantity,
+                    'product_brand' => $product->brand,
+                    'product_price' => $product->price,
+                    'product_status' => $product->status,
+                ];
+            });
+
+            return (object)[
+                'order_id' => $order->id,
+                'order_date' => $order->order_date,
+                'shipped_date' => $order->updated_at,
+                'total_amount' => $order->total_amount,
+                'delivery_status' => $order->delivery_status,
+                'user_id' => $order->user->id,
+                'user_name' => $order->user->name,
+                'user_phone_no' => $order->user->phone_no,
+                'user_address' => $order->user->address,
+                'user_city' => $order->user->city,
+                'user_pincode' => $order->user->pincode,
+                'products' => $products,
+            ];
+        });
+
+        return view('pages.shippedOrders', compact('shippedDetails', 'shippedOrderCount'));
+    }
+
+    public function searchShippedOrders(Request $request)
+    {   
+        $ShippedOrder = Order::with(['user', 'orderitems.product'])->where('delivery_status', 'Shipped');
+
+        if($request->filled('search')) {
+            $search = $request->search;
+
+            $ShippedOrder->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('phone_no', 'LIKE', "%{$search}%");
+            });
+        }
+        
+        return response()->json($ShippedOrder->get());
+    }
+
+    public function deliveredOrder(Request $request, $orderId)
+    {
+        $orders = Order::find($orderId);
+
+        if($orders) {
+            $orders->delivery_status = $request->status;
+            $orders->save();
+
+            return response()->json(['success' => true]);
+        }
+        
+        return  response()->json(['success' => false]);
     }
 }
