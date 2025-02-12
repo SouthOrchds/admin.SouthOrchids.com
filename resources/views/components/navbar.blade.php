@@ -5,18 +5,20 @@
         </div>
         <div class="flex gap-10 cursor-pointer items-center max-sm:hidden">
             <a href= "{{ route('dashboard') }}">Home</a>
-            <a href= "{{ route('usersdata') }}">Customers</=>
+            <a href= "{{ route('usersdata') }}">Customers</a>
+            <a href="{{ route('cart') }}">Cart</a>
             <a href="{{ route('products') }}">Products</a>
             <select class="w-15 bg-black" onchange="window.location.href=this.value;">
                 <option value=""> Orders </option>
                 <option value="{{ route('user.ordersDetails') }}">Order Details</option>
                 <option value="{{ route('user.orderItems') }}">Order Items</option>
+                <option value="{{ route('user.shippedOrders') }}">Shipped Items</option>
             </select>
             <a href="{{ route('transactions') }}">Transaction</a>
             <select class="w-15 bg-black" name="" id="" onchange="window.location.href=this.value;">
                 <option value="">-- Others --</option>
+                <option value="{{ route('adminUsers') }}">Admins </option>
                 <option value="{{ route('adminRegister') }}">Admin Register</option>
-                <option value="">Admin Authorization</option>
             </select>
             <div>
                 <a href="{{ route('logout') }}">Logout</a>
@@ -42,8 +44,8 @@
                     <a href="{{ route('transactions') }}" class="hover:font-bold">Transaction</a>
                     <select class="w-20 bg-white outline-none hover:font-bold" name="" id="" onchange="window.location.href=this.value;">
                         <option value=""> Others</option>
+                        <option value="{{ route('adminUsers') }}">Admin </option>
                         <option value="{{ route('adminRegister') }}">Admin Register</option>
-                        <option value="">Admin Authorization</option>
                     </select>
                     <div class="">
                         <a href="{{ route('logout') }}" class="text-red-500 hover:font-bold">Logout</a>
