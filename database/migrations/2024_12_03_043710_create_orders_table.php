@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->dateTime('order_date');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('tranaction_id')->nullable();
+            $table->unsignedInteger('transaction_id')->nullable();
             $table->json('total_count');
             $table->unsignedInteger('total_amount');
             $table->string('payment_status');

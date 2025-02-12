@@ -63,9 +63,9 @@
                     @endforeach
                     @endif
                 @endforeach
-                @if($hasOrders)
+                @if(!$hasOrders)
                     <tr>
-                        <td colspan="7" class="-center text">..No Orders placed..</td>
+                        <td colspan="7" class="text-center p-5">..No Orders placed..</td>
                     </tr>
                 @endif
             </tbody>
