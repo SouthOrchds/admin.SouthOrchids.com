@@ -42,7 +42,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Phone_NO</th>
+                <th>Phone_No</th>
                 <th>Address</th>
                 <th>City</th>
                 <th>Pincode</th>
