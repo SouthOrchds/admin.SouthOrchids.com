@@ -16,17 +16,17 @@
         }
 </style>
 
-    <div class="p-5 max-sm:p-2">
-        <div class="py-5 max-sm:py-2">
+    <div class="p-3 max-sm:p-2">
+        <div class="py-3 max-sm:py-2">
             <p class="text-3xl font-medium max-sm:text-2xl">Shipped Orders <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $shippedOrderCount }} )</span></p>
         </div>
-        <div class="py-5 max-sm:py-5">
+        <div class="py-3 max-sm:py-5">
             <form action="{{ route('user.shippedOrders.search') }}" method="GET">
                 <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96 max-sm:w-full">
                 <p class="px-1 text-sm text-gray-600 max-sm:text-xs">Enter name or phone number</p>
             </form>
         </div>
-        <div class="py-5 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
+        <div class="py-3 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
             <table>
                 <thead>
                     <th>Id</th>
