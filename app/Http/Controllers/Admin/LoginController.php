@@ -24,6 +24,11 @@ class LoginController extends Controller
 
     public function checkLogin(Request $request)
     {
+        $admin = Admin::where('email', $request->email)->first();
+
+        if($admin->status != 'active') {
+            return back()->withErrors(["email" => 'Your account is inactive']);
+        }
 
         if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('dashboard');
