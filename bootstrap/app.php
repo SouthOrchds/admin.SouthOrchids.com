@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(HandleCors::class);
+
+        $middleware->alias([
+            'check_permission' => App\Http\Middleware\CheckAdminPermission::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
