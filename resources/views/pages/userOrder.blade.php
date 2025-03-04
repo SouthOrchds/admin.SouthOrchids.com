@@ -17,11 +17,11 @@
     }
 </style>
 
-<div class="p-5 max-sm:p-2">
-  <div class="py-5 max-sm:py-2">
+<div class="p-3 max-sm:p-2">
+  <div class="py-3 max-sm:py-2">
     <p class="text-3xl font-medium max-sm:text-2xl">Order Details <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $userorders->count() }} )</span></p>
   </div>
-  <div class="py-5 max-sm:py-5">
+  <div class="py-3 max-sm:py-5">
     <form action="{{ route('user.ordersDetails.search') }}" method="GET" class="flex gap-20 items-center max-sm:block">
       <div class="max-sm:mb-3">
         <input type="text" name="search" id="searchInput" placeholder="Search" class="p-1 border border-black w-96 max-sm:w-full">
@@ -39,7 +39,7 @@
     </form>
   </div>
 
-    <div class="py-5 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
+    <div class="py-3 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
       <table>
         <thead>
           <th>Id</th>

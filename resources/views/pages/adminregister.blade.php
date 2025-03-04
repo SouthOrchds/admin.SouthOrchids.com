@@ -5,8 +5,8 @@
 @section('content')
 <div class="max-sm:p-5 max-sm:w-full">
     <p class="text-2xl font-medium text-center max-sm:text-xl">Register Page</p>
-    <div class="p-5 flex justify-center">
-        <form action="{{ route('adminRegister') }}" method="POST">
+    <div class="p-3 flex justify-center">
+        <form action="{{ route('admin.register') }}" method="POST">
             @csrf
             <div class="py-1">
                 <p class="py-1 md:text-lg">Name :</p>
