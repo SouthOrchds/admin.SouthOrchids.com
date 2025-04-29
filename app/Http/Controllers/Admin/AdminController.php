@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Admin_permission;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +48,29 @@ class AdminController extends Controller
             alert('Password does not match');
         }
 
-        return redirect()->route('login');
+        return response()->json(["Success" => true]);
+    }
+
+    
+    public function adminShow()
+    {
+        $admins = Admin::all();
+        return view('pages/adminsdata', compact('admins'));
+    }
+
+    public function getAdminData(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $admins = Admin::where('email', 'LIKE', "%{$search}%")
+                ->orWhere('phone_no', 'LIKE', "%{$search}%")
+                ->get()
+                ->map(function ($admin) {
+                    $admin->permissionCount = Admin_permission::where('admin_id', $admin->id)->count();
+                    return $admin;
+                });
+
+        return response()->json($admins);
+
     }
 }

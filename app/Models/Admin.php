@@ -14,4 +14,10 @@ class Admin extends Authenticatable
     protected $guard = 'admin';
     
     protected $guarded = [];
+
+    public function adminPermissions()
+    {
+        return $this->hasMany(Admin_permission::class);
+    }
+
 }

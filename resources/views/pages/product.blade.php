@@ -16,12 +16,12 @@
         }
 </style>
 
-<div class="p-5 max-sm:p-2">
-    <div class="py-5 max-sm:py-2">
+<div class="p-3 max-sm:p-2">
+    <div class="py-3 max-sm:py-2">
         <h1 class="text-3xl font-medium max-sm:text-2xl">Products  <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $products->count() }} )</span></h1>
     </div>
     
-    <div class="flex justify-between py-5 max-sm:py-2 max-sm:flex-col max-sm:gap-4">
+    <div class="flex justify-between py-3 max-sm:py-2 max-sm:flex-col max-sm:gap-4">
         <form action="{{ route('products.search') }}" >
             <div class="flex gap-x-10 max-sm:flex-col max-sm:gap-2">
                 <div>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div class="py-5 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
+    <div class="py-3 max-sm:py-2 max-sm:text-sm max-sm:overflow-x-scroll">
         <table>
             <thead>
                 <th>Id</th>

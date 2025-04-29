@@ -16,7 +16,7 @@
     }
 </style>
 
-<div class="p-5 max-sm:p-2">
+<div class="p-3 max-sm:p-2">
     <p class="text-3xl font-medium max-sm:text-2xl">Customer Orders <span id="totalCount" class="text-2xl max-sm:text-xl">( Total: {{ $placedOrderCount }} )</span></p>
     <div class="py-10 max-sm:pt-10 max-sm:pb-2 max-sm:overflow-x-scroll">
         <table class="text-lg max-sm:text-sm">
@@ -37,6 +37,7 @@
                 @foreach ($orderDetail as $order)
                 @if ($order->delivery_status === 'Order Placed')
                     @php 
+                        $hasOrders = true;
                         $productCount = count($order->products);
                     @endphp
                     @foreach($order->products as $index => $product)
@@ -63,7 +64,7 @@
                     @endforeach
                     @endif
                 @endforeach
-                @if(!$hasOrders)
+                @if (!$hasOrders)
                     <tr>
                         <td colspan="7" class="text-center p-5">..No Orders placed..</td>
                     </tr>
@@ -75,7 +76,7 @@
 
 <script>
     function deliveryUpdate(orderId) {
-        fetch(`/admin/order/${orderId}/ship`, {
+        fetch(`/order/${orderId}/ship`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

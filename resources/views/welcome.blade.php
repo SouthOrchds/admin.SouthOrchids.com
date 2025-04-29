@@ -7,7 +7,7 @@
 </head>
 <body>
     <div>
-        <h1>Hi</h1>
+        <h1>This is Welcome Page</h1>
     </div>
 </body>
 </html>

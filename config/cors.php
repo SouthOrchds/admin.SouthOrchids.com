@@ -19,8 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    // 'allowed_origins' => ['*'],
-    'allowed_origins' => ['http://13.201.122.152'],
+    'allowed_origins' => ['*'],
+    // 'allowed_origins' => ['http://13.201.122.152'],
 
     'allowed_origins_patterns' => [],
 
